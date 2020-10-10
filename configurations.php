@@ -6,3 +6,5 @@ if (!defined('enigma')) {
 }
 
 $version = "1.0.0";
+
+define("dev", True);
