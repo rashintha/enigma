@@ -3,10 +3,45 @@
 # Enigma Script
 # Author : Rashintha Maduneth
 
+program=$0
+
 while :; do
     case "$1" in
-        
+        init) initFlag=True;;
+        *) break
     esac
 
     shift
 done
+
+function usage {
+    echo ""
+    echo "Enigma Framework"
+    echo "  usage: $program init"
+    echo "      init            initialize the framework"
+    echo ""
+    exit 1
+}
+
+pwd=$(pwd)
+
+function create_links {
+    for dir in $1/*; do
+        if [ -d "$dir" ] && [ "$dir" != "app/components" ] && [ "$dir" != "app/widgets" ]; then
+            if [[ -L "$dir/index.php" ]]; then
+                rm $dir/index.php
+            fi
+            
+            ln -s "$pwd"/app/index.php $dir/index.php
+            create_links "$dir"
+        fi
+    done
+}
+
+if [ $initFlag ]; then
+    create_links "app"
+else
+    error=True
+fi
+
+if [ $error ]; then usage; fi
