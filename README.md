@@ -1,12 +1,11 @@
-# Enigma
-Enigma is a PHP and Vue based framework
-
 <p align="center">
-    <img alt="GitHub" src="https://img.shields.io/github/license/rashintha/enigma">
-    <img alt="Vue" src="https://img.shields.io/badge/dependancy-vue-brightgreen">
-    <img alt="Vue Router" src="https://img.shields.io/badge/dependancy-vue%20router-brightgreen">
-    <img alt="Vue Router" src="https://img.shields.io/badge/dependancy-axios-brightgreen">
+    <a href="http://opensource.org/licenses/MIT"><img alt="GitHub" src="https://img.shields.io/github/license/rashintha/enigma"></a>
+    <a href="https://vuejs.org/"><img alt="Vue" src="https://img.shields.io/badge/dependancy-vue%20v2.6.12-blue"></a>
+    <a href="https://router.vuejs.org/"><img alt="Vue Router" src="https://img.shields.io/badge/dependancy-vue%20router%20v3.4.3-blue"></a>
+    <a href="https://github.com/axios/axios"><img alt="Axios" src="https://img.shields.io/badge/dependancy-axios%20v0.20.0-blue"></a>
 </p>
+
+<h2 align="center">Enigma Framework</h2>
 
 ## Version Controlling
 It's very important to do version controlling when using javascript files otherwise the client browser will use cached items. Enigma uses the version in `configurations.php` around the whole system so when ever you are releasing a new version, remember to change the version in the configurations file.
