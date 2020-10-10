@@ -7,7 +7,7 @@ program=$0
 
 while :; do
     case "$1" in
-        init) initFlag=True;;
+        secure) secureFlag=True;;
         *) break
     esac
 
@@ -17,8 +17,8 @@ done
 function usage {
     echo ""
     echo "Enigma Framework"
-    echo "  usage: $program init"
-    echo "      init            initialize the framework"
+    echo "  usage: $program secure"
+    echo "      secure            secure files and directories of the app folder"
     echo ""
     exit 1
 }
@@ -38,7 +38,7 @@ function create_links {
     done
 }
 
-if [ $initFlag ]; then
+if [ $secureFlag ]; then
     create_links "app"
 else
     error=True
