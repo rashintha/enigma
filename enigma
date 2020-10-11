@@ -8,17 +8,26 @@ program=$0
 while :; do
     case "$1" in
         secure) secureFlag=True;;
+        new) newFlag=True;;
+        component) componentFlag=True;;
         *) break
     esac
 
     shift
 done
 
+fileName=$1
+
+echo "File: |$fileName|"
+
 function usage {
     echo ""
     echo "Enigma Framework"
     echo "  usage: $program secure"
     echo "      secure            secure files and directories of the app folder"
+    echo ""
+    echo "  usage: $program new component [name]"
+    echo "      name         new component name"
     echo ""
     exit 1
 }
@@ -38,9 +47,76 @@ function create_links {
     done
 }
 
-if [ $secureFlag ]; then
+function create_new {
+    if [ "$1" == "component" ]; then
+        echo "Creating component..."
+        
+        DIR="app/components/$fileName"
+        name=$fileName"_component"
+        htmlURL="app/components/?$fileName&html"
+        cssURL="'app/component/?$fileName&css&v' + \$route.meta.version"
+    fi
+
+    if [ -d $DIR ]; then
+        [ "$1" == "component" ] && echo "Component $fileName is already exists"
+        exit 1
+    fi
+
+    NOW=$(date +"%Y-%m-%d %T")
+    HOST=$(cat /proc/sys/kernel/hostname)
+
+    echo "    Creating directories..."
+    mkdir $DIR
+
+    echo "    Setting permissions..."
+    touch "$DIR/.htaccess"
+
+    echo "deny from all
+ServerSignature Off" > "$DIR/.htaccess"
+
+    echo "    Ceating files..."
+    touch "$DIR/$fileName.css"
+    touch "$DIR/$fileName.js"
+    touch "$DIR/$fileName.html"
+
+    echo "/*
+ * Created on: $NOW
+ * Created by: $USER@$HOST
+ */" > "$DIR/$fileName.css"
+
+    echo "/*
+ * Created on: $NOW
+ * Created by: $USER@$HOST
+ */
+ 
+const ${name^^} = Vue.component('$name', function (resolve, reject) {
+    axios.get('$htmlURL').then(({data}) =>{
+        resolve({
+            data(){
+                return{
+                    
+                };
+            },
+            methods: {
+
+            },
+            computed: {
+                
+            },
+            mounted(){
+                
+            },
+            template: data
+        });
+    });
+});" > "$DIR/$fileName.js"
+}
+
+if [ $secureFlag ] && ! [ $newFlag ] && ! [ $componentFlag ]; then
     create_links "app"
-else
+elif [ $newFlag ] && [ $componentFlag ] && ! [ -z "${fileName}" ]; then
+    create_new "component"
+else 
     error=True
 fi
 
